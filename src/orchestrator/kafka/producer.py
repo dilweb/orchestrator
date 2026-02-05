@@ -9,7 +9,6 @@ from orchestrator.kafka.config import kafka_settings
 
 logger = logging.getLogger(__name__)
 
-
 class KafkaCommandProducer:
     def __init__(self, *, topic: str, client_id: str):
         self._producer = AIOKafkaProducer(
@@ -58,25 +57,6 @@ class KafkaCommandProducer:
 
 _inventory_producer: KafkaCommandProducer | None = None
 _payment_producer: KafkaCommandProducer | None = None
-
-def get_inventory_producer() -> KafkaCommandProducer:
-    global _inventory_producer
-    if _inventory_producer is None:
-        _inventory_producer = KafkaCommandProducer(
-            topic=kafka_settings.inventory_commands_topic,
-            client_id="orchestrator-inventory",
-        )
-    return _inventory_producer
-
-def get_payment_producer() -> KafkaCommandProducer:
-    global _payment_producer
-    if _payment_producer is None:
-        _payment_producer = KafkaCommandProducer(
-            topic=kafka_settings.payment_commands_topic,
-            client_id="orchestrator-payment",
-        )
-    return _payment_producer
-
 _order_events_producer: KafkaCommandProducer | None = None
 _notifications_producer: KafkaCommandProducer | None = None
 
@@ -97,3 +77,21 @@ def get_notifications_producer() -> KafkaCommandProducer:
           client_id="orchestrator-notifications",
       )
   return _notifications_producer
+
+def get_inventory_producer() -> KafkaCommandProducer:
+    global _inventory_producer
+    if _inventory_producer is None:
+        _inventory_producer = KafkaCommandProducer(
+            topic=kafka_settings.inventory_commands_topic,
+            client_id="orchestrator-inventory",
+        )
+    return _inventory_producer
+
+def get_payment_producer() -> KafkaCommandProducer:
+    global _payment_producer
+    if _payment_producer is None:
+        _payment_producer = KafkaCommandProducer(
+            topic=kafka_settings.payment_commands_topic,
+            client_id="orchestrator-payment",
+        )
+    return _payment_producer
