@@ -35,6 +35,7 @@ class OrderKafkaConsumer:
         self._started = False
         self._lock = asyncio.Lock()
 
+
     async def __aenter__(self) -> "OrderKafkaConsumer":
         await self.start()
         return self
